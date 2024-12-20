@@ -1,0 +1,270 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="messages">
+  {% if messages %} {% for message in messages %}
+  <div class="message {{ message.tags }}">{{ message }}</div>
+  {% endfor %} {% endif %}
+</div>
+
+<!-- <div class="login-container">
+  
+  <h3 class="lead">Upload Image for Vehicle Number Plate Detection</h3>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+</div> -->
+<div class="container py-5 login-container">
+  <!-- Header Section -->
+  <header class="text-center header">
+    <h3 class="display-4">Upload Image for Vehicle Number Plate Detection</h3>
+    <p class="lead mb-0">Upload an image to detect vehicle license plates.</p>
+  </header>
+
+  <div class="row py-4">
+    <div class="col-lg-6 mx-auto">
+      <!-- Image Upload Form -->
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Upload Image Input -->
+        <div class="input-group mb-3 px-2 py-2 rounded-pill shadow-sm">
+          {{ form.as_p }}
+          <!-- <label
+            id="upload-label"
+            for="upload"
+            class="font-weight-light text-muted"
+            >Choose file</label
+          > -->
+          <!-- <div class="input-group-append">
+            <label for="upload" class="btn btn-light m-0 rounded-pill px-4">
+              <i class="fa fa-cloud-upload mr-2 text-muted"></i>
+              <small class="text-uppercase font-weight-bold text-muted"
+                >Choose file</small
+              >
+            </label>
+          </div> -->
+        </div>
+
+        <!-- Image Preview Area -->
+
+        <!-- Submit Button -->
+        <div class="text-center mt-4">
+          <button type="submit" class="btn">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript for Image Preview -->
+<script>
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("imageResult").src = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+  document.getElementById("upload").onchange = function () {
+    readURL(this);
+  };
+</script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9966, #149b7e);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-height: 100vh;
+    background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1124&q=100");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    backdrop-filter: blur(15px) saturate(171%);
+    -webkit-backdrop-filter: blur(15px) saturate(171%);
+    background-color: rgba(17, 25, 40, 0.58);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+  .btn {
+    width: 100%;
+    background: linear-gradient(135deg, #264bdc, #149b7e);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 1px 1px 20px #2576bc;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background 0.3s, transform 0.2s;
+  }
+  header {
+    background-color: #c6d9d3;
+    border-radius: 20px;
+  }
+
+  .login-container {
+    backdrop-filter: blur(15px) saturate(171%);
+    -webkit-backdrop-filter: blur(15px) saturate(171%);
+    background-color: rgba(17, 25, 40, 0.58);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: 1s;
+    margin: 40px 0px 120px 0px;
+  }
+
+  .login-container:hover {
+    backdrop-filter: blur(0px) saturate(200%);
+    -webkit-backdrop-filter: blur(0px) saturate(200%);
+    background-color: rgba(17, 25, 40, 0.38);
+  }
+
+  .navbar {
+    width: 100%;
+    background-color: hsl(0, 5%, 15%) !important;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    box-shadow: 1px 1px 10px hsl(0, 0%, 10%) !important;
+  }
+
+  .navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar ul li {
+    margin: 0 15px;
+  }
+
+  .navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .navbar ul li a:hover {
+    color: #ff5e62;
+  }
+
+  /* Message styles */
+  .messages {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .message {
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 5px 0;
+  }
+
+  .message.success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  h1 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  label {
+    display: block;
+    text-align: left;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95em;
+    transition: border-color 0.3s;
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    border-color: #57cbdc;
+    outline: none;
+  }
+  .lead {
+    color: hsl(0, 100%, 75%);
+  }
+  .container {
+    box-shadow: 1px 1px 20px hsl(240, 100%, 60%);
+  }
+
+  /* .btn {
+    width: 100%;
+    background: linear-gradient(135deg, #ff5e62, #ff9966);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background 0.3s, transform 0.2s;
+  } */
+
+  .btn:hover {
+    background: url("{% static 'detection/images/background.png' %}") no-repeat
+      center center fixed;
+    /* Add your image path */
+    background-size: cover;
+    transform: scale(1.03);
+    color: white;
+  }
+
+  .register-link {
+    margin-top: 15px;
+    font-size: 0.9em;
+  }
+
+  .register-link a {
+    color: #ff5e62;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .register-link a:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock %}
