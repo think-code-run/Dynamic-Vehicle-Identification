@@ -1,0 +1,172 @@
+{% extends 'base.html' %} {%load static%} {% block content %}
+
+<div class="messages">
+  {% if messages %} {% for message in messages %}
+  <div class="message {{ message.tags }}">{{ message }}</div>
+  {% endfor %} {% endif %}
+</div>
+
+<div class="login-container">
+  <h1>Create an Account</h1>
+  <form method="POST">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn">Register</button>
+  </form>
+</div>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff9966, #149b7e);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-height: 100vh;
+    background-image: url("https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1124&q=100");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    backdrop-filter: blur(15px) saturate(171%);
+    -webkit-backdrop-filter: blur(15px) saturate(171%);
+    background-color: rgba(17, 25, 40, 0.58);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
+
+  .login-container {
+    color: white;
+    backdrop-filter: blur(15px) saturate(171%);
+    -webkit-backdrop-filter: blur(15px) saturate(171%);
+    background-color: rgba(17, 25, 40, 0.58);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    margin: 40px 0px 120px 0px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: 1s;
+  }
+
+  .login-container:hover {
+    backdrop-filter: blur(0px) saturate(200%);
+    -webkit-backdrop-filter: blur(0px) saturate(200%);
+    background-color: rgba(17, 25, 40, 0.38);
+  }
+
+  .navbar {
+    width: 100%;
+    background-color: #333;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar ul li {
+    margin: 0 15px;
+  }
+
+  .navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+
+  .navbar ul li a:hover {
+    color: #ff5e62;
+  }
+
+  h1,
+  h2 {
+    font-size: 1.8em;
+    color: #fff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  label {
+    display: block;
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 3px solid #ffffff;
+    border-radius: 8px;
+    font-size: 0.95em;
+    transition: border-color 0.3s;
+  }
+
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    border: 3px solid #149b7e;
+    outline: none;
+  }
+
+  .btn {
+    width: 100%;
+    background: linear-gradient(135deg, #149b7e, #149b7e);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .btn:hover {
+    background: url("{% static 'detection/images/background.png' %}") no-repeat
+      center center fixed;
+    background-size: cover;
+    transform: scale(1.05);
+    color: white;
+  }
+
+  .messages {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .message {
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 5px 0;
+  }
+
+  .message.success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+</style>
+
+{% endblock %}

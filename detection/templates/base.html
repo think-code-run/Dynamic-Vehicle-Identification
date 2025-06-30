@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}Dynamic Vehicle Identification & Tracker{% endblock %}
+    </title>
+    {% load django_bootstrap5 %} {% bootstrap_css %} {% bootstrap_javascript %}
+  </head>
+  <style>
+    /* form {
+      color: white;
+    } */
+    body {
+      background-image: url("{% static 'images/background.jpg' %}");
+    }
+
+    header {
+      background-color: white;
+    }
+
+    table,
+    th,
+    td {
+      border: 2px solid black;
+      padding: 2px;
+    }
+
+    .Plate {
+      color: white;
+      margin-top: 5px;
+    }
+
+    footer {
+      color: white;
+      background-color: black;
+      margin: 0px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .home-img {
+      width: 100%;
+      height: 350px;
+    }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 0;
+      background-color: hsl(0, 0%, 10%);
+    }
+    .para {
+      font-weight: 300 solid;
+    }
+    .login-btn {
+      color: white;
+    }
+    .login-btn:hover {
+      background-color: white;
+      color: black;
+    }
+    .logout-btn {
+      color: white;
+    }
+    .logout-btn:hover {
+      background-color: white;
+      color: black;
+    }
+  </style>
+
+  <body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="http://127.0.0.1:8000">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="45"
+            fill="currentColor"
+            class="bi bi-car-front-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679q.05.242.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.8.8 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2m10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2M6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2zM2.906 5.189a.51.51 0 0 0 .497.731c.91-.073 3.35-.17 4.597-.17s3.688.097 4.597.17a.51.51 0 0 0 .497-.731l-.956-1.913A.5.5 0 0 0 11.691 3H4.309a.5.5 0 0 0-.447.276L2.906 5.19Z"
+            />
+          </svg>
+        </a>
+        <h3 class="Plate">Number Plate Detection</h3>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <!-- Add ms-auto to align right -->
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                aria-current="page"
+                href="http://127.0.0.1:8000"
+              >
+                Home
+                <!-- Change link text -->
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link active" href="http://127.0.0.1:8000/contactme/"
+                >Contact Us</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="http://127.0.0.1:8000/services/"
+                >Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <!-- <a class="nav-link active" href="http://127.0.0.1:8000/login/"
+                >Login</a
+              > -->
+              {% if user.is_authenticated %}
+              <a href="{% url 'logout' %}" class="btn logout-btn">Logout</a>
+              {% else %}
+              <a href="{% url 'login' %}" class="btn login-btn">Login</a>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Messages Section {% if messages %}
+    <div class="messages">
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %} -->
+
+    <main class="main-content">
+      {% block content %}
+      <div class="container">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-12 col-sm-8 col-lg-6">
+            <img
+              src="{% static 'images/image.png' %}"
+              alt="Bootstrap Themes"
+              class="home-img"
+            />
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+              Dynamic Vehicle Identification
+            </h1>
+            <p class="para">
+              Our cutting-edge vehicle identification system leverages advanced
+              AI to deliver real-time detection and tracking. With dynamic
+              vehicle tracking, we enable smarter city solutions for traffic
+              management, parking enforcement, and security monitoring.
+              Experience seamless, accurate data for enhanced operational
+              efficiency.
+            </p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+              {% if user.is_authenticated %}
+              <a href="http://127.0.0.1:8000/services/"
+                ><button
+                  type="button"
+                  class="btn btn-primary btn-lg px-4 me-md-2"
+                >
+                  Go To Services
+                </button></a
+              >
+              {% else %}
+              <a href="http://127.0.0.1:8000/login/"
+                ><button
+                  type="button"
+                  class="btn btn-primary btn-lg px-4 me-md-2"
+                >
+                  Login
+                </button></a
+              >
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+    </main>
+
+    <div>
+      <footer>
+        <ul class="nav justify-content-center pb-3 mb-0">
+          <li class="nav-item">
+            <a
+              href="http://127.0.0.1:8000"
+              class="nav-link px-2 footer text-white"
+              >Home</a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a
+              href="http://127.0.0.1:8000/contactme/"
+              class="nav-link px-2 footer text-white"
+              >Contact Us</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="http://127.0.0.1:8000/services/"
+              class="nav-link px-2 footer text-white"
+              >Services</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="http://127.0.0.1:8000/login/"
+              class="nav-link px-2 footer text-white"
+              >Login</a
+            >
+          </li>
+        </ul>
+        <p class="text-center text-white m-0">© 2024 Company, Inc</p>
+      </footer>
+    </div>
+  </body>
+</html>
